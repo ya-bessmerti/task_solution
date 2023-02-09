@@ -1,4 +1,4 @@
-#ID 81989777
+#ID 82032290
 from typing import List
 
 
@@ -15,8 +15,8 @@ def get_distance(
     for house in range(0, list_zero[0] + 1):
         result[house] = list_zero[0] - house
     for position in range(len(list_zero) - 1):
-        empty_plot, next_empty_section \
-        = list_zero[position], list_zero[position + 1]
+        empty_plot = list_zero[position]
+        next_empty_section = list_zero[position + 1]
         for house in range(empty_plot, next_empty_section):
             result[house] = min(
                 house - empty_plot,
@@ -31,4 +31,4 @@ if __name__=='__main__':
     street_length = int(input())
     number_houses = list(map(int, input().strip().split()))
     result_list = get_distance(number_houses, street_length)
-    print(*result_list, sep = ' ')
+    print(*result_list, sep=' ')
