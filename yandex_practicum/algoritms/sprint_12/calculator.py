@@ -1,3 +1,4 @@
+#ID 82708404
 import math
 
 
@@ -11,14 +12,11 @@ class Calculator():
     def pop(self):
         if len(self.items) != 0:
             return self.items.pop()
-        else:
-            return 'error'
+        raise 'error'
 
 
-if __name__=='__main__':
-    input_items = input().split()
-    calculator = Calculator()
-    for value in input_items:
+def get_items(values):
+    for value in values:
         try:
             calculator.push(int(value))
         except ValueError:
@@ -34,8 +32,18 @@ if __name__=='__main__':
                     )
                 )
             if value == '/':
-                get_lambda = lambda denominator, numerator: math.floor(numerator/denominator)
-                calculator.push(int(get_lambda(calculator.pop(), calculator.pop())))
+                get_lambda = lambda denominator, numerator: math.floor(
+                    numerator/denominator
+                )
+                calculator.push(
+                    int(get_lambda(calculator.pop(), calculator.pop()))
+                )
             if value == '*':
                 calculator.push((calculator.pop()) * (calculator.pop()))
+
+
+if __name__=='__main__':
+    input_items = input().split()
+    calculator = Calculator()
+    get_items(input_items)
     print(calculator.pop())
