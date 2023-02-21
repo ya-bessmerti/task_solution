@@ -1,49 +1,52 @@
-#ID 82708404
+#ID 82761807
 import math
 
 
-class Calculator():
+class ItemsAreMissingException(Exception):
     def __init__(self):
-        self.items = []
+        pass
+
+
+class Stack:
+    def __init__(self):
+        self.__items = []
 
     def push(self, item):
-        self.items.append(item)
+        self.__items.append(item)
     
     def pop(self):
-        if len(self.items) != 0:
-            return self.items.pop()
-        raise 'error'
+        if len(self.__items) != 0:
+            return self.__items.pop()
+        raise ItemsAreMissingException
 
 
-def get_items(values):
-    for value in values:
+def calculate(input_items):
+    dictionary_calculations = {
+        '+':lambda second_summand, first_summand: (
+            first_summand + second_summand
+        ),
+        '-':lambda deductible, reduced: (
+            reduced - deductible
+        ),
+        '/':lambda denominator, numerator: math.floor(
+            numerator/denominator
+        ),
+        '*':lambda second_factor, first_factor: (
+            first_factor * second_factor
+        ),
+    }
+    stack = Stack()
+    for value in input_items.split():
         try:
-            calculator.push(int(value))
+            stack.push(int(value))
         except ValueError:
-            if value == '+':
-                calculator.push(
-                    (calculator.pop()) + (calculator.pop())
+            stack.push(
+                dictionary_calculations[value](
+                    stack.pop(),stack.pop()
                 )
-            if value == '-':
-                get_lambda = lambda deductible, reduced: reduced - deductible
-                calculator.push(
-                    int(
-                        get_lambda(calculator.pop(), calculator.pop())
-                    )
-                )
-            if value == '/':
-                get_lambda = lambda denominator, numerator: math.floor(
-                    numerator/denominator
-                )
-                calculator.push(
-                    int(get_lambda(calculator.pop(), calculator.pop()))
-                )
-            if value == '*':
-                calculator.push((calculator.pop()) * (calculator.pop()))
+            )
+    return stack.pop()
 
 
 if __name__=='__main__':
-    input_items = input().split()
-    calculator = Calculator()
-    get_items(input_items)
-    print(calculator.pop())
+    print(calculate(input()))
