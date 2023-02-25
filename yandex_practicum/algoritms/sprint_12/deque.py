@@ -1,4 +1,8 @@
-#ID 82764747
+#ID 82924536
+class SizeErrorException(Exception):
+    pass
+
+
 class Deque():
     def __init__(self, number_max):
         self.__items = [None] * number_max
@@ -16,26 +20,24 @@ class Deque():
         return (pointer - 1) % self.__max_size
 
     def push_back(self, item):
-        if self.__size_deque != self.__max_size:
-            self.__tail = self.__move_pointer(
-                self.__tail,
-                direction=True,
-            )
-            self.__items[self.__tail] = item
-            self.__size_deque += 1
-        else:
-            raise OverflowError
+        if self.__size_deque == self.__max_size:
+            raise SizeErrorException
+        self.__tail = self.__move_pointer(
+            self.__tail,
+            direction=True,
+        )
+        self.__items[self.__tail] = item
+        self.__size_deque += 1
 
     def push_front(self, item):
-        if self.__size_deque != self.__max_size:
-            self.__head = self.__move_pointer(
-                self.__head,
-                direction=False,
-            )
-            self.__items[self.__head] = item
-            self.__size_deque += 1
-        else:
-            raise OverflowError
+        if self.__size_deque == self.__max_size:
+            raise SizeErrorException
+        self.__head = self.__move_pointer(
+            self.__head,
+            direction=False,
+        )
+        self.__items[self.__head] = item
+        self.__size_deque += 1
 
     def pop_back(self):
         if self.__is_empty():
@@ -72,7 +74,7 @@ def main():
         if value:
             try:
                 result = getattr(deque, operation)(int(*value))
-            except OverflowError:
+            except:
                 print('error')
         else:
             try:
