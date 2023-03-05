@@ -1,55 +1,21 @@
 from typing import List
 
-def merge_flower_beds(beds):
-    start, end = beds[0]
-    next_beds = 1
+def merge_flower_beds(gardeners, beds):
     result = []
-    while next_beds < len(beds):
-        next_start, next_end = beds[next_beds]
-        if (start <= next_start <= end or
-                start <= next_end <= end):
-            start, end = min(start, next_start), max(end, next_end)
+    beds = sorted(beds, key=lambda i: [i[0], i[1]])
+    for i in range(gardeners-1):
+        if (beds[i][1] >= beds[i+1][0]):
+            beds[i+1][0] = min(beds[i][0], beds[i+1][0])
+            beds[i+1][1] = max(beds[i][1], beds[i+1][1])
         else:
-            result.append([start, end])
-            start, end = beds[next_beds]
-        next_beds += 1
-    result.append([start, end])
+            result.append(beds[i])
+    result.append(beds[-1])
     return result
-
-
-def merge_sort(flowers):
-    if len(flowers) == 1:
-        return flowers
-    
-    left: List[int] = merge_sort(flowers[0: len(flowers) // 2])
-    right: List[int] = merge_sort(flowers[len(flowers) // 2: len(flowers)])
-
-    result: List = [] * len(flowers)
-
-    l, r = 0, 0
-
-    while l < len(left) and r < len(right):
-        if left[l] <= right[r]:
-            result.append(left[l])
-            l += 1
-        else:
-            result.append(right[r])
-            r += 1
-
-    while l < len(left):
-        result.append(left[l])
-        l += 1
-    while r < len(right):
-        result.append(right[r])
-        r += 1
-
-    return result
-
 
 def main():
     gardeners = int(input())
     flower_beds = [[int(i) for i in input().split()] for _ in range(gardeners)]
-    result = merge_flower_beds(merge_sort(flower_beds))
+    result = merge_flower_beds(gardeners, flower_beds)
     [print(*i) for i in result]
 
 
