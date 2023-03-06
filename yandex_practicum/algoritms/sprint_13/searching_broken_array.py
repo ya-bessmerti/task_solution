@@ -1,4 +1,4 @@
-#ID 83448959
+#ID 83506148
 from typing import List
 
 
@@ -21,12 +21,6 @@ def broken_search(array: List[int], target: int) -> int:
     return -1
 
 
-def main() -> None:
-    _ = int(input())
-    desired_element = int(input())
-    array = [int(i) for i in input().strip().split()]
-    print(broken_search(array, desired_element))
-
-
-if __name__ == '__main__':
-    main()
+def test():
+    arr = [19, 21, 100, 101, 1, 4, 5, 7, 12]
+    assert broken_search(arr, 5) == 6
