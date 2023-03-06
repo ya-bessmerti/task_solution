@@ -1,4 +1,4 @@
-#ID 83476144
+#ID 83531762
 def quick_sort(array, left, right):
     if right <= left:
         return
@@ -20,11 +20,6 @@ def quick_sort(array, left, right):
     quick_sort(array, left_index, right)
 
 
-def get_order(players):
-    quick_sort(players, 0, len(players) - 1)
-    return [row[2] for row in players]
-
-
 def read_input(index):
         name, points, penalty = input().split()
         players[index] = (-int(points), int(penalty), name)
@@ -35,5 +30,5 @@ if __name__ == '__main__':
     count_line = int(input())
     players = [None] * count_line
     players = [read_input(index) for index in range(count_line)]
-    result = get_order(players)
-    print(*result, sep='\n')
+    quick_sort(players, 0, len(players) - 1)
+    [print(row[2]) for row in players]
