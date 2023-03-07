@@ -1,4 +1,4 @@
-#ID 83532412
+#ID 83561094
 def quick_sort(array, left, right):
     if right <= left:
         return
@@ -30,4 +30,5 @@ if __name__ == '__main__':
     players = [None] * count_line
     players = [read_input() for _ in range(count_line)]
     quick_sort(players, 0, len(players) - 1)
-    [print(row[2]) for row in players]
+    for row in players:
+        print(row[2])

@@ -1,4 +1,4 @@
-#ID 83506148
+#ID 83561201
 from typing import List
 
 
@@ -19,8 +19,3 @@ def broken_search(array: List[int], target: int) -> int:
             else:
                 right_index = middle_index - 1
     return -1
-
-
-def test():
-    arr = [19, 21, 100, 101, 1, 4, 5, 7, 12]
-    assert broken_search(arr, 5) == 6
